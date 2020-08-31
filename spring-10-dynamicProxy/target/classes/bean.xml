@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="com.lpl"></context:component-scan>
+
+    <!--配置QueryRunner对象（配置为多例）-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+    </bean>
+    <!--注入c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mybatis_study"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="Gepoint"></property>
+    </bean>
+
+    <!--将accountService setter注入到代理工厂中-->
+    <!--<bean id="beanProxyFactory" class="com.lpl.factory.BeanProxyFactory">
+        <property name="accountService" ref="accountService"></property>
+    </bean>-->
+    <!--配置accountService代理对象，使用工厂方法方式-->
+    <bean id="proxyAccountService" factory-bean="beanProxyFactory" factory-method="getAccountProxyService"></bean>
+
+</beans>

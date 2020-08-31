@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        spring对Bean的管理细节：
+        1.创建Bean的三种方式；
+        2.Bean对象的作用范围；
+        3.Bean对象的声明周期；
+    -->
+    <!--
+        创建对象的三种方式：
+            第一种方式：使用默认构造函数创建。
+                在bean标签中，指定id和class属性，且没有其他属性和标签时，采用的就是默认构造函数创建Bean对象，
+                此时如果类中没有默认构造函数，则对象无法创建。
+            第二种方式：使用普通工厂中的方法创建对象。
+            第三种方式：使用某个类中的静态方法创建对象。
+    -->
+    <!--第一种方式：使用默认构造函数-->
+    <!--<bean id="accountService" class="com.lpl.service.impl.AccountServiceImpl"></bean>-->
+
+    <!--第二种方式：使用工厂中的方法-->
+    <!--<bean id="instanceFactory" class="com.lpl.jar.InstanceFactory"></bean>
+    <bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"></bean>-->
+
+    <!--第三种方式：使用类中静态方法-->
+    <!--<bean id="accountService" class="com.lpl.jar.StaticFactory" factory-method="getAccountService"></bean>-->
+
+    <!--
+        Bean对象的作用范围：
+            scope属性：指定Bean的作用范围。
+                取值：
+                    singleton：单例，默认值
+                    prototype：多例
+                    request：web应用的请求范围（了解）
+                    session：web应用的会话范围（了解）
+                    global-session：集群环境的会话范围（了解）
+    -->
+    <bean id="accountService" class="com.lpl.service.impl.AccountServiceImpl"
+          scope="singleton" init-method="init" destroy-method="destroy"></bean>
+    <!--
+        Bean对象的声明周期：
+            单例对象：
+                出生：当容器创建时对象被创建
+                活着：容器还在，对象一直活着
+                死亡：容器销毁，对象消亡
+            多例对象：
+                出生：
+                活着：
+                死亡：
+    -->
+
+
+
+</beans>

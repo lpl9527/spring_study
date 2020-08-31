@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        Spring的依赖注入：
+            在类中遇到的其它类的对象，由Spring提供，只需在配置文件中声明，依赖关系的维护称为依赖注入。
+            能注入的三类数据类型：
+                第一类：基本类型和String类型
+                第二类：在配置文件中活着注解配置过的Bean
+                第三类：集合类型
+            注入的三种方式：
+                第一种：构造函数注入
+                第二种：setter方法注入
+                第三种：注解注入
+    -->
+    <!--
+        第一种：构造函数注入
+            优势：在获取Bean对象时，注入数据是必须的操作，否则对象无法创建成功
+            弊端：改变了对象的实例化方式，创建对象时如果不需要这些参数，也必须提供。
+    -->
+    <bean id="accountService" class="com.lpl.service.impl.AccountServiceImpl">
+        <constructor-arg name="name" value="刘朋龙"></constructor-arg>
+        <constructor-arg name="age" value="23"></constructor-arg>
+        <constructor-arg name="birthday" ref="date"></constructor-arg>
+    </bean>
+    <!--配置一个当前日期对象-->
+    <bean id="date" class="java.util.Date">
+        <constructor-arg name="year" value="120"></constructor-arg>
+        <constructor-arg name="month" value="3"></constructor-arg>
+        <constructor-arg name="date" value="4"></constructor-arg>
+    </bean>
+
+    <!--
+        第二种：Setter方法注入  最常用的注入方式
+            property标签的name属性只与setter方法名称有关，与类的属性名称无关
+    -->
+    <bean id="accountService2" class="com.lpl.service.impl.AccountServiceImpl2">
+        <property name="name" value="斑斑呀"></property>
+        <property name="age" value="22"></property>
+        <property name="birthday" ref="date"></property>
+    </bean>
+    <!--
+        集合类型的Setter注入：
+            用于给List结构注入的标签：
+                list、array、set
+            用于给Map结构注入的标签：
+                map、props
+        结构相同时，标签可以互换。
+    -->
+    <bean id="accountService3" class="com.lpl.service.impl.AccountServiceImpl3">
+        <!--数组-->
+        <property name="myArray">
+            <array>
+                <value>数组元素1</value>
+                <value>数组元素2</value>
+            </array>
+        </property>
+        <!--List-->
+        <property name="myList">
+            <list>
+                <value>List元素1</value>
+                <value>List元素2</value>
+            </list>
+        </property>
+        <!--Set-->
+        <property name="mySet">
+            <set>
+                <value>Set元素1</value>
+                <value>Set元素2</value>
+            </set>
+        </property>
+        <!--Map-->
+        <property name="myMap">
+            <map>
+                <entry key="Map元素key1" value="Map元素value1"></entry>
+                <entry key="Map元素key2">
+                    <value>Map元素value2</value>
+                </entry>
+            </map>
+        </property>
+        <!--Properties-->
+        <property name="myProps">
+            <props>
+                <prop key="Properties元素key1">Properties元素value1</prop>
+                <prop key="Properties元素key2">Properties元素value2</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
